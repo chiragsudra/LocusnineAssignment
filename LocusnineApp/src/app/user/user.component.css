@@ -1,0 +1,44 @@
+.new-user-btn{
+    color:#ffffff;
+    background-color: #ffaf2a;
+}
+
+.search-group{
+    margin-right: 30px;
+}
+.srch-textbox{
+    border-right: 0;
+}
+.srch-btn{
+    color: #212529;
+    background-color: #ffffff;
+    border-color: #ced4da;
+    border-left: 0;
+}
+
+.backdrop {
+    background-color:rgba(0,0,0,0.6);
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+}
+
+  .validation-error{
+      color:red;
+  }
+
+  .form-control, .btn{
+      border-radius: 0;
+  }
+
+  .btn-full-width{
+      width: 100%;
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::before  {
+    color: #ffffff;
+    border-color:#ffaf2a;
+    background-color: #ffaf2a;
+  }

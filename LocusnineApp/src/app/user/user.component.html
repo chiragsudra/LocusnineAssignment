@@ -1,0 +1,105 @@
+<div *ngIf="dataSaved" class="alert alert-success" role="alert">
+    {{message}}
+</div>
+<div class="row" style="padding: 15px 30px;">
+    <div class="col-4">
+        <img src="../../assets/icons/ico_users.svg" /> Users
+    </div>
+    <div class="col-8">
+        <div class="form-inline" style="text-align: right;">
+            <div class="input-group search-group">
+                <input type="text" #serachName placeholder="Search" class="form-control srch-textbox"  />
+                <div class="input-group-append srch-btn">
+                  <button class="btn btn-light srch-btn" type="button" (click)="showSearchedUsers(serachName.value)"><img src="../../assets/icons/ico_search.svg" /></button>
+                </div>
+              </div>
+            
+            <input type="button" class="btn btn-warning new-user-btn" value="+ New" (click)="show('0')" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>ROLE TYPE</th>
+                    <th>STATUS</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of allUsers | async">
+                    <td>{{user.Name}}</td>
+                    <td>{{user.Email}}</td>
+                    <td>{{user.Role}}</td>
+                    <td><img *ngIf="user.Status=='Active'" src="../../assets/icons/ico_active.svg" />
+                        <img *ngIf="user.Status=='Inactive'" src="../../assets/icons/ico_inactive.svg" />
+                        <img *ngIf="user.Status=='Pending'" src="../../assets/icons/ico_pending.svg" />
+                        {{user.Status}}</td>
+                    <td>
+                        <img src="../../assets/icons/ico_edit.svg" (click)="show(user.ID)" />
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <ul class="pagination">
+                            <li *ngFor="let page of pageField" class="page-item">
+                                <a class="page-link" (click)="jumpToPage(page)">{{page}}</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog modal-dialog-centered" style="width:25%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()" autocomplete="off">
+                    <div class="form-group">
+                        <input type="text" name="Name" ng-model="Name" formControlName="Name" class="form-control"
+                            placeholder="Name" required>
+                        <label class="validation-error"
+                            *ngIf="!userForm.get('Name').value && userForm.get('Name').touched">This field is
+                            requied.</label>
+                    </div>
+                    <div class="form-group form-check-inline">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input class="form-check-input custom-control-input" type="radio" name="Role" id="rdAdmin"
+                                formControlName="Role" value="Admin" checked="true" />
+                            <label for="rdAdmin" class="custom-control-label">Admin</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-check-inline">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input class="form-check-input custom-control-input" type="radio" name="Role" id="rdExec"
+                                formControlName="Role" value="Customer Executive" />
+                            <label for="rdExec" class="custom-control-label">Customer Executive</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" formControlName="MobileNumber" class="form-control"
+                            placeholder="Mobile Number (Optional)">
+
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-full-width" [disabled]="!userForm.valid">ADD
+                        USER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
