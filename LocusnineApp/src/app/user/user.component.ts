@@ -91,6 +91,7 @@ export class UserComponent implements OnInit {
     else {
       user.ID = this.userIDForUpdate;
       user.Email = this.useremailForUpdate;
+      user.Status = this.userstatusForUpdate;
       this.userService.updateUser(user).subscribe(() => {
         this.loadUsers();
         this.userIDForUpdate = null;
